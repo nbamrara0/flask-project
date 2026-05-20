@@ -3,6 +3,7 @@ from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 import pickle
 import numpy as np
+from sqlalchemy import all_
 
 app = Flask(__name__)
 
@@ -68,7 +69,9 @@ def predict():
     features = np.array([[area, bedrooms, bathrooms]])
 
     # Predict price
+
     prediction = model.predict(features)
+    pediction = max(0, prediction[0])
 
     output = round(prediction[0], 2)
 
