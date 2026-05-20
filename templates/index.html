@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>House Price Prediction</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+
+        body{
+            background:#f5f7fa;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .hero{
+            background: linear-gradient(to right,#0f172a,#1e293b);
+            color:white;
+            padding:60px 0;
+            text-align:center;
+        }
+
+        .main-card{
+            background:white;
+            border-radius:15px;
+            padding:40px;
+            margin-top:-40px;
+            box-shadow:0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .form-control{
+            padding:12px;
+            border-radius:10px;
+        }
+
+        .btn-custom{
+            background:#2563eb;
+            color:white;
+            padding:12px;
+            border-radius:10px;
+            width:100%;
+            border:none;
+        }
+
+        .btn-custom:hover{
+            background:#1d4ed8;
+        }
+
+        .prediction-box{
+            background:#dcfce7;
+            padding:15px;
+            border-radius:10px;
+            margin-top:20px;
+            font-size:20px;
+            font-weight:bold;
+            color:#166534;
+        }
+
+        table{
+            margin-top:40px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- HERO SECTION -->
+
+    <div class="hero">
+
+        <div class="container">
+
+            <h1 class="display-4 fw-bold">
+                House Price Prediction
+            </h1>
+
+            <p class="lead">
+                AI Powered Flask Machine Learning Project
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- MAIN CONTENT -->
+
+    <div class="container">
+
+        <div class="main-card">
+
+            <div class="row">
+
+                <!-- FORM -->
+
+                <div class="col-md-5">
+
+                    <h3 class="mb-4">
+                        Predict Your House Price
+                    </h3>
+
+                    <form action="/predict" method="POST">
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Area (sq ft)
+                            </label>
+
+                            <input
+                                type="number"
+                                class="form-control"
+                                name="area"
+                                placeholder="Enter Area"
+                                required
+                            >
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Bedrooms
+                            </label>
+
+                            <input
+                                type="number"
+                                class="form-control"
+                                name="bedrooms"
+                                placeholder="Enter Bedrooms"
+                                required
+                            >
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Bathrooms
+                            </label>
+
+                            <input
+                                type="number"
+                                class="form-control"
+                                name="bathrooms"
+                                placeholder="Enter Bathrooms"
+                                required
+                            >
+
+                        </div>
+
+                        <button type="submit" class="btn-custom">
+                            Predict Price
+                        </button>
+
+                    </form>
+
+                    {% if prediction_text %}
+
+                    <div class="prediction-box">
+
+                        {{prediction_text}}
+
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+                <!-- IMAGE / INFO -->
+
+                <div class="col-md-7 text-center">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1568605114967-8130f3a36994"
+                        class="img-fluid rounded"
+                        style="height:350px; object-fit:cover;"
+                    >
+
+                </div>
+
+            </div>
+
+            <!-- TABLE -->
+
+            <h3 class="mt-5">
+                Prediction History
+            </h3>
+
+            <table class="table table-bordered table-hover">
+
+                <thead class="table-dark">
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Area</th>
+
+                        <th>Bedrooms</th>
+
+                        <th>Bathrooms</th>
+                        <th>datetime</th>
+
+                        <th>Predicted Price</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for data in all_data %}
+
+                    <tr>
+
+                        <td>{{data.id}}</td>
+
+                        <td>{{data.area}}</td>
+
+                        <td>{{data.bedrooms}}</td>
+
+                        <td>{{data.bathrooms}}</td>
+                        <td>{{data.datetime}}</td>
+
+                        <td>₹ {{data.predicted_price}}</td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
