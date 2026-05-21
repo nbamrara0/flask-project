@@ -30,7 +30,7 @@ class Prediction(db.Model):
     bedrooms = db.Column(db.Integer, nullable=False)
 
     bathrooms = db.Column(db.Integer, nullable=False)
-    date_created = db.Column(db.DateTime, default=datetime.utcnow)
+    # date_created = db.Column(db.DateTime, default=datetime.utcnow)
 
     predicted_price = db.Column(db.Float, nullable=False)
 
@@ -81,7 +81,7 @@ def predict():
         area=area,
         bedrooms=bedrooms,
         bathrooms=bathrooms,
-        # datetime=datetime.now(),
+        datetime=datetime.now(),
         predicted_price=output
     )
 
