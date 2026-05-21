@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
+# from datetime import datetime
 import pickle
 import numpy as np
 import os
@@ -24,7 +24,7 @@ class Prediction(db.Model):
     area = db.Column(db.Float, nullable=False)
     bedrooms = db.Column(db.Integer, nullable=False)
     bathrooms = db.Column(db.Integer, nullable=False)
-    date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    # date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     predicted_price = db.Column(db.Float, nullable=False)
 
     def __repr__(self):
@@ -58,7 +58,7 @@ def predict():
         area=area,
         bedrooms=bedrooms,
         bathrooms=bathrooms,
-        datetime=datetime.now(),
+        # datetime=datetime.now(),
         predicted_price=output
     )
 
