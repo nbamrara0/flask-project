@@ -90,11 +90,7 @@ def predict():
 
     all_data = Prediction.query.all()
 
-    return render_template(
-        'index.html',
-        prediction_text=f'Estimated House Price: ₹ {output}',
-        all_data=all_data
-    )
+    return render_template( 'index.html')
 
 # ---------------- DELETE ----------------
 #
