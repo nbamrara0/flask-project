@@ -72,7 +72,7 @@ def predict():
     # Predict price
 
     prediction = model.predict(features)
-    prediction_text = f"Predicted Price: ₹ {prediction[0]:,.2f}"
+    # prediction_text = f"Predicted Price: ₹ {prediction[0]:,.2f}"
 
     output = round(prediction[0], 2)
 
@@ -90,7 +90,7 @@ def predict():
 
     all_data = Prediction.query.all()
 
-
+    prediction_text = f"Predicted Price: ₹ {prediction[0]:,.2f}"
     return render_template("index.html", prediction_text=prediction_text)
 
 # ---------------- DELETE ----------------
