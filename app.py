@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 import pickle
 import numpy as np
 import os
@@ -7,7 +8,9 @@ import os
 app = Flask(__name__)
 
 # ---------------- DATABASE CONFIG ----------------
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///instance/todo.db'
+basedir = os.path.abspath(os.path.dirname(__file__))
+app.config['SQLALCHEMY_DATABASE_URI'] = \
+    'sqlite:///' + os.path.join(basedir, 'todo.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -21,6 +24,7 @@ class Prediction(db.Model):
     area = db.Column(db.Float, nullable=False)
     bedrooms = db.Column(db.Integer, nullable=False)
     bathrooms = db.Column(db.Integer, nullable=False)
+    date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     predicted_price = db.Column(db.Float, nullable=False)
 
     def __repr__(self):
@@ -54,6 +58,7 @@ def predict():
         area=area,
         bedrooms=bedrooms,
         bathrooms=bathrooms,
+        datetime=datetime.now(),
         predicted_price=output
     )
 
