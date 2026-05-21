@@ -5,3 +5,4 @@ instance/
 *.pkl
 .idea/
 .env
+todo.db
