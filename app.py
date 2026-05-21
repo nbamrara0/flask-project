@@ -1,8 +1,9 @@
-from flask import Flask, render_template, request,port
+from flask import Flask, render_template, request
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 import pickle
 import numpy as np
+import os
 
 
 app = Flask(__name__)
@@ -109,6 +110,6 @@ def predict():
 #     return home()
 
 # ---------------- RUN APP ----------------
-
 if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
