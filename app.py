@@ -7,9 +7,7 @@ import os
 app = Flask(__name__)
 
 # ---------------- DATABASE CONFIG ----------------
-basedir = os.path.abspath(os.path.dirname(__file__))
-app.config['SQLALCHEMY_DATABASE_URI'] = \
-    'sqlite:///' + os.path.join(basedir, 'todo.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("postgresql://naveen:9jlCrOzliDSz0lfMLF3AoI8c6byumTIG@dpg-d8836pgg4nts73eogpmg-a/house_db_bqk1")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -76,3 +74,4 @@ def predict():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
+    # https://flask-project-1-foev.onrender.com url

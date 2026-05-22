@@ -6,3 +6,4 @@ instance/
 .idea/
 .env
 todo.db
+app.py
