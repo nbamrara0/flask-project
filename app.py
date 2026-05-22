@@ -6,12 +6,18 @@ import os
 
 app = Flask(__name__)
 
-# ---------------- DATABASE CONFIG ----------------
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("postgresql://naveen:9jlCrOzliDSz0lfMLF3AoI8c6byumTIG@dpg-d8836pgg4nts73eogpmg-a/house_db_bqk1")
+# DATABASE URL
+database_url = os.environ.get("DATABASE_URL")
+
+# Local or Render Database
+if database_url:
+    app.config['SQLALCHEMY_DATABASE_URI'] = database_url
+else:
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://naveen:9jlCrOzliDSz0lfMLF3AoI8c6byumTIG@dpg-d8836pgg4nts73eogpmg-a.oregon-postgres.render.com/house_db_bqk1'
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
-
 # ---------------- LOAD MODEL ----------------
 model = pickle.load(open('model.pkl', 'rb'))
 
@@ -44,10 +50,10 @@ def predict():
     bedrooms = int(request.form['bedrooms'])
     bathrooms = int(request.form['bathrooms'])
 
-    features = np.array([[area, bedrooms, bathrooms]])
+    features = [[area, bedrooms, bathrooms]]
 
     prediction = model.predict(features)
-    output = round(prediction[0], 2)
+    output = float(round(prediction[0], 2))
 
     # ✅ SAVE TO DATABASE (FIXED)
     data = Prediction(
