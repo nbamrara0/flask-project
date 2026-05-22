@@ -1,20 +1,16 @@
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 import pickle
-import numpy as np
+from dotenv import load_dotenv
 import os
 
 app = Flask(__name__)
 
-# DATABASE URL
-database_url = os.environ.get("DATABASE_URL")
+load_dotenv()
 
-# Local or Render Database
-if database_url:
-    app.config['SQLALCHEMY_DATABASE_URI'] = database_url
-else:
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://naveen:9jlCrOzliDSz0lfMLF3AoI8c6byumTIG@dpg-d8836pgg4nts73eogpmg-a.oregon-postgres.render.com/house_db_bqk1'
+database_url = os.getenv("DATABASE_URL")
 
+app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)

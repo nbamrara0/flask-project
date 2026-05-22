@@ -5,5 +5,3 @@ instance/
 *.pkl
 .idea/
 .env
-todo.db
-app.py
