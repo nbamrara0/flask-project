@@ -1,0 +1,126 @@
+ <!DOCTYPE html>
+    <html>
+    <head>
+        <title>House Price Predictions</title>
+        <style>
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+            body {
+                font-family: Arial, sans-serif;
+                background: #f0f2f5;
+                padding: 40px 20px;
+            }
+            .container {
+                max-width: 900px;
+                margin: 0 auto;
+                background: white;
+                border-radius: 12px;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+                padding: 30px;
+            }
+            h2 {
+                text-align: center;
+                color: #2c3e50;
+                margin-bottom: 25px;
+                font-size: 26px;
+            }
+            .count {
+                text-align: center;
+                color: #7f8c8d;
+                margin-bottom: 20px;
+                font-size: 14px;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            thead tr {
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                color: white;
+            }
+            th {
+                padding: 14px 16px;
+                text-align: center;
+                font-size: 15px;
+                letter-spacing: 0.5px;
+            }
+            td {
+                padding: 12px 16px;
+                text-align: center;
+                border-bottom: 1px solid #ecf0f1;
+                color: #2c3e50;
+                font-size: 14px;
+            }
+            tr:nth-child(even) td {
+                background-color: #f8f9ff;
+            }
+            tr:hover td {
+                background-color: #eef0ff;
+            }
+            .price {
+                color: #27ae60;
+                font-weight: bold;
+                font-size: 15px;
+            }
+            .no-data {
+                text-align: center;
+                padding: 40px;
+                color: #95a5a6;
+                font-size: 16px;
+            }
+            .back-btn {
+                display: block;
+                width: fit-content;
+                margin: 25px auto 0;
+                padding: 10px 25px;
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                color: white;
+                text-decoration: none;
+                border-radius: 25px;
+                font-size: 14px;
+                text-align: center;
+            }
+            .back-btn:hover {
+                opacity: 0.9;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h2>🏠 House Price Predictions</h2>
+    '''
+
+    html += f'<p class="count">Total Records: {len(entries)}</p>'
+
+    if entries:
+        html += '''
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Area (sq ft)</th>
+                        <th>Bedrooms</th>
+                        <th>Bathrooms</th>
+                        <th>Predicted Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+        '''
+        for e in entries:
+            html += f'''
+                <tr>
+                    <td>{e.id}</td>
+                    <td>{e.area}</td>
+                    <td>{e.bedrooms}</td>
+                    <td>{e.bathrooms}</td>
+                    <td class="price">₹ {e.predicted_price:,.2f}</td>
+                </tr>
+            '''
+        html += '</tbody></table>'
+    else:
+        html += '<p class="no-data">❌ Koi data nahi hai abhi!</p>'
+
+    html += '''
+            <a class="back-btn" href="/">⬅ Back to Home</a>
+        </div>
+    </body>
+    </html>
