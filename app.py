@@ -91,7 +91,7 @@ def show_data():
             'bathrooms': e.bathrooms,
             'price': e.predicted_price
         })
-    return str(result)
+    return render_template('show data.html')
 # ---------------- RUN APP ----------------
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
