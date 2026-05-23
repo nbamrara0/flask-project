@@ -79,6 +79,19 @@ def predict():
         all_data=all_data
     )
 
+@app.route('/show-data')
+def show_data():
+    entries = Prediction.query.all()
+    result = []
+    for e in entries:
+        result.append({
+            'id': e.id,
+            'area': e.area,
+            'bedrooms': e.bedrooms,
+            'bathrooms': e.bathrooms,
+            'price': e.predicted_price
+        })
+    return str(result)
 # ---------------- RUN APP ----------------
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
