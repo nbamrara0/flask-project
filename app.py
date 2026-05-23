@@ -91,8 +91,8 @@ def show_data():
             'bathrooms': e.bathrooms,
             'price': e.predicted_price
         })
-        entry = Prediction.query.filter_by(id=e.id).first()
-    return render_template('show_data.html', entry=entry)
+        entries = Prediction.query.all()
+    return render_template('show_data.html',  entries=entries)
 # ---------------- RUN APP ----------------
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
