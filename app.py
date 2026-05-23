@@ -81,6 +81,9 @@ def predict():
 # Admin credentials — environment se lo
 ADMIN_EMAIL = os.getenv("ADMIN_EMAIL", "admin@gmail.com")
 ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "admin123")
+print("EMAIL:", ADMIN_EMAIL)
+print("PASS:", ADMIN_PASSWORD)
+
 # Admin login route
 @app.route('/admin-login', methods=['GET', 'POST'])
 def admin_login():
