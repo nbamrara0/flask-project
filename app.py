@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 load_dotenv()
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session
 from flask_sqlalchemy import SQLAlchemy
 import pickle
 import os
@@ -78,9 +78,26 @@ def predict():
         prediction_text=prediction_text,
         all_data=all_data
     )
+# Admin credentials — environment se lo
+ADMIN_EMAIL = os.getenv("ADMIN_EMAIL", "admin@gmail.com")
+ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "admin123")
+# Admin login route
+@app.route('/admin-login', methods=['GET', 'POST'])
+def admin_login():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        if email == ADMIN_EMAIL and password == ADMIN_PASSWORD:
+            session['admin'] = True
+            return redirect(url_for('show_data'))
+        else:
+            return render_template('admin_login.html', error="Wrong credentials!")
+    return render_template('admin_login.html')
 
 @app.route('/show-data')
 def show_data():
+    if not session.get('admin'):  # ← yeh check lagao
+        return redirect (url_for('admin_login'))
     entries = Prediction.query.all()
     result = []
     for e in entries:
