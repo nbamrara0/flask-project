@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 load_dotenv()
-from flask import Flask, render_template, request, session
+from flask import Flask, render_template, request, session, url_for, redirect
 from flask_sqlalchemy import SQLAlchemy
 import pickle
 import os
@@ -96,7 +96,7 @@ def admin_login():
 
 @app.route('/show-data')
 def show_data():
-    if not session.get('admin'):  # ← yeh check lagao
+    if not session.get('admin'):
         return redirect (url_for('admin_login'))
     entries = Prediction.query.all()
     result = []
