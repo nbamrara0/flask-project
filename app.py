@@ -1,12 +1,12 @@
+from dotenv import load_dotenv
+load_dotenv()
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 import pickle
-from dotenv import load_dotenv
 import os
 
 app = Flask(__name__)
 
-load_dotenv()
 
 database_url = os.getenv("DATABASE_URL")
 
@@ -33,7 +33,11 @@ class Prediction(db.Model):
 
 # Create DB
 with app.app_context():
-    db.create_all()
+    try:
+        db.create_all()
+        print("Database connected successfully!")
+    except Exception as e:
+        print(f"Database error: {e}")
 
 # ---------------- HOME PAGE ----------------
 @app.route('/')
