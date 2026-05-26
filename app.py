@@ -30,8 +30,7 @@ class User(db.Model):
     email = db.Column(db.String(100), nullable=False)
 
     password = db.Column(db.String(100), nullable=False)
-
- def __repr__(self):
+    def __repr__(self):
         return f"{self.id} - {self.username} - {self.email}"
 # Create Database
 with app.app_context():
