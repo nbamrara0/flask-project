@@ -20,6 +20,53 @@ db = SQLAlchemy(app)
 # ---------------- LOAD MODEL ----------------
 model = pickle.load(open('model.pkl', 'rb'))
 
+# Database Table
+class User(db.Model):
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    username = db.Column(db.String(100), nullable=False)
+
+    email = db.Column(db.String(100), nullable=False)
+
+    password = db.Column(db.String(100), nullable=False)
+
+
+# Create Database
+with app.app_context():
+    db.create_all()
+
+
+# Login Page First
+@app.route("/", methods=["GET", "POST"])
+def login():
+
+    if request.method == "POST":
+
+        username = request.form.get("username")
+
+        email = request.form.get("email")
+
+        password = request.form.get("password")
+
+        # Save Data
+        user = User(
+            username=username,
+            email=email,
+            password=password
+        )
+
+        db.session.add(user)
+
+        db.session.commit()
+
+        # Go To Home Page
+        return redirect(url_for("home"))
+
+    return render_template("login.html")
+
+
+
 # ---------------- DATABASE TABLE ----------------
 class Prediction(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -58,7 +105,7 @@ def predict():
     prediction = model.predict(features)
     output = float(round(prediction[0], 2))
 
-    # ✅ SAVE TO DATABASE (FIXED)
+    # SAVE TO DATABASE (FIXED)
     data = Prediction(
         area=area,
         bedrooms=bedrooms,
@@ -82,8 +129,6 @@ def predict():
 ADMIN_EMAIL = os.getenv("ADMIN_EMAIL", "admin@gmail.com")
 ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "admin123")
 
-print("EMAIL:", ADMIN_EMAIL)
-print("PASS:", ADMIN_PASSWORD)
 
 # Admin login route
 @app.route('/admin-login', methods=['GET', 'POST'])
