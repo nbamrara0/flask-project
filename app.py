@@ -31,14 +31,15 @@ class User(db.Model):
 
     password = db.Column(db.String(100), nullable=False)
 
-
+ def __repr__(self):
+        return f"{self.id} - {self.username} - {self.email}"
 # Create Database
 with app.app_context():
     db.create_all()
 
 
 # Login Page First
-@app.route("/", methods=["GET", "POST"])
+@app.route("/login", methods=["GET", "POST"])
 def login():
 
     if request.method == "POST":
@@ -66,6 +67,12 @@ def login():
     return render_template("login.html")
 
 
+# ---------------- HOME PAGE ----------------
+@app.route('/')
+def home():
+    all_data = Prediction.query.all()
+    return render_template('index.html', all_data=all_data)
+
 
 # ---------------- DATABASE TABLE ----------------
 class Prediction(db.Model):
@@ -85,12 +92,6 @@ with app.app_context():
         print("Database connected successfully!")
     except Exception as e:
         print(f"Database error: {e}")
-
-# ---------------- HOME PAGE ----------------
-@app.route('/')
-def home():
-    all_data = Prediction.query.all()
-    return render_template('index.html', all_data=all_data)
 
 # ---------------- PREDICT ----------------
 @app.route('/predict', methods=['POST'])
