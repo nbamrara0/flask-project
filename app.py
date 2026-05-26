@@ -158,6 +158,8 @@ def show_data():
             'price': e.predicted_price
         })
         entries = Prediction.query.all()
+        # Login Users Data
+        users = User.query.all()
     return render_template('show_data.html',  entries=entries)
 # ---------------- RUN APP ----------------
 if __name__ == '__main__':
