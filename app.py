@@ -38,7 +38,7 @@ with app.app_context():
 
 
 # Login Page First
-@app.route("/login", methods=["GET", "POST"])
+@app.route("/", methods=["GET", "POST"])
 def login():
 
     if request.method == "POST":
@@ -67,7 +67,7 @@ def login():
 
 
 # ---------------- HOME PAGE ----------------
-@app.route('/')
+@app.route('/home')
 def home():
     all_data = Prediction.query.all()
     return render_template('index.html', all_data=all_data)
