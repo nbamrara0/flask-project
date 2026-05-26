@@ -32,9 +32,25 @@ class User(db.Model):
     password = db.Column(db.String(100), nullable=False)
     def __repr__(self):
         return f"{self.id} - {self.username} - {self.email}"
-# Create Database
+
+    # ---------------- DATABASE TABLE ----------------
+class Prediction(db.Model):
+        id = db.Column(db.Integer, primary_key=True)
+        area = db.Column(db.Float, nullable=False)
+        bedrooms = db.Column(db.Integer, nullable=False)
+        bathrooms = db.Column(db.Integer, nullable=False)
+        predicted_price = db.Column(db.Float, nullable=False)
+
+        def __repr__(self):
+            return f"{self.id} - {self.predicted_price}"
+
+# Create DB
 with app.app_context():
-    db.create_all()
+    try:
+        db.create_all()
+        print("Database connected successfully!")
+    except Exception as e:
+        print(f"Database error: {e}")
 
 
 # Login Page First
@@ -72,25 +88,6 @@ def home():
     all_data = Prediction.query.all()
     return render_template('index.html', all_data=all_data)
 
-
-# ---------------- DATABASE TABLE ----------------
-class Prediction(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    area = db.Column(db.Float, nullable=False)
-    bedrooms = db.Column(db.Integer, nullable=False)
-    bathrooms = db.Column(db.Integer, nullable=False)
-    predicted_price = db.Column(db.Float, nullable=False)
-
-    def __repr__(self):
-        return f"{self.id} - {self.predicted_price}"
-
-# Create DB
-with app.app_context():
-    try:
-        db.create_all()
-        print("Database connected successfully!")
-    except Exception as e:
-        print(f"Database error: {e}")
 
 # ---------------- PREDICT ----------------
 @app.route('/predict', methods=['POST'])
@@ -159,8 +156,8 @@ def show_data():
         })
         entries = Prediction.query.all()
         # Login Users Data
-        users = User.query.all()
-    return render_template('show_data.html',  entries=entries)
+    users = User.query.all()
+    return render_template('show_data.html',  entries=entries,users=users)
 # ---------------- RUN APP ----------------
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
